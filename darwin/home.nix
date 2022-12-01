@@ -25,6 +25,7 @@
       lsd
       bat
       kitty
+      rectangle
     ];
     stateVersion = "22.05";
   };

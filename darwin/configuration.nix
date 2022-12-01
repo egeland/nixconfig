@@ -24,6 +24,8 @@
     hostName = "high-hrothgar";
   };
 
+  security.pam.enableSudoTouchIdAuth = true;
+
   fonts = {
     # Fonts
     fontDir.enable = true;
@@ -51,6 +53,7 @@
       ranger
       fd
       ripgrep
+      dockutil
     ];
   };
 
@@ -68,7 +71,7 @@
     enable = true;
     onActivation = {
       autoUpdate = true; # Auto update packages
-      cleanup = "zap"; # Uninstall not listed packages and casks
+      #cleanup = "zap"; # Uninstall not listed packages and casks
     };
     brews = [
     ];
@@ -99,18 +102,24 @@
 
   system = {
     defaults = {
+      alf = {
+        globalstate = 1;
+        stealthenabled = 1;
+        allowdownloadsignedenabled = 1;
+      };
       NSGlobalDomain = {
         # Global macOS system settings
         KeyRepeat = 1;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
+        "com.apple.swipescrolldirection" = false;
       };
       dock = {
         # Dock settings
         autohide = true;
         orientation = "bottom";
         showhidden = true;
-        tilesize = 40;
+        tilesize = 80;
       };
       finder = {
         # Finder settings
@@ -120,6 +129,9 @@
         # Trackpad settings
         Clicking = true;
         TrackpadRightClick = true;
+      };
+      SoftwareUpdate = {
+        AutomaticallyInstallMacOSUpdates = true;
       };
     };
     keyboard = {
