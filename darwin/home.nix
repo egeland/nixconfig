@@ -74,6 +74,7 @@
         no-greeting = true;
         auto-key-retrieve = true;
         default-key = "0x6249C5087F5382D2";
+        trusted-key = "0x6249C5087F5382D2";
       };
       scdaemonSettings = {
         disable-ccid = true;
