@@ -55,11 +55,21 @@
       ripgrep
       dockutil
     ];
+    systemPath = [
+      "/etc/profiles/per-user/frode/bin/libexec"
+    ];
   };
 
   programs = {
     # Shell needs to be enabled
     zsh.enable = true;
+
+    gnupg = {
+      agent = {
+        enable = true;
+        enableSSHSupport = true;
+      };
+    };
   };
 
   services = {
@@ -74,6 +84,8 @@
       #cleanup = "zap"; # Uninstall not listed packages and casks
     };
     brews = [
+      "hopenpgp-tools"
+      "ykman"
     ];
     casks = [
       "google-chrome"
@@ -119,7 +131,8 @@
         autohide = true;
         orientation = "bottom";
         showhidden = true;
-        tilesize = 80;
+        tilesize = 50;
+        show-recents = false;
       };
       finder = {
         # Finder settings
@@ -137,7 +150,12 @@
     keyboard = {
       enableKeyMapping = true; # Needed for skhd
     };
-    activationScripts.postActivation.text = ''sudo chsh -s ${pkgs.zsh}/bin/zsh''; # Since it's not possible to declare default shell, run this command after build
+    activationScripts.postActivation.text = ''
+      # sudo chsh -s ${pkgs.zsh}/bin/zsh ; # Since it's not possible to declare default shell, run this command after build
+      # ./darwin/dock.sh; # set up the dock
+      # /etc/profiles/per-user/frode/bin/gpgconf --kill gpg-agent; echo "=== START A NEW SHELL NOW ==="
+      # grep -A 22 -- '----BEGIN PGP PUBLIC KEY BLOCK-----' <(curl -s $(${pkgs.gnupg}/bin/gpg --card-status | grep 'URL of public key' | awk '{print $6}')) | ${pkgs.gnupg}/bin/gpg --import
+    '';
     stateVersion = 4;
   };
 }

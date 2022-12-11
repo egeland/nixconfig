@@ -9,7 +9,11 @@
 #       └─ ./programs
 #           └─ ./alacritty.nix
 #
-{pkgs, ...}: {
+{
+  pkgs,
+  sshcontrol_value,
+  ...
+}: {
   # imports =
   #   [
   #     ../modules/programs/alacritty.nix
@@ -18,7 +22,7 @@
   home = {
     # Specific packages for macbook
     packages = with pkgs; [
-      # Terminal
+      pinentry_mac
       pfetch
       starship
       fish
@@ -26,8 +30,25 @@
       bat
       kitty
       rectangle
+      fzf
+      zoxide
+      yubikey-personalization
+      gnupg
+      python310
+      python310Packages.pip
+      python310Packages.ipython
     ];
     stateVersion = "22.05";
+  };
+
+  # Raw config files
+  home.file.".gnupg/gpg-agent.conf" = {
+    source = ./gpg-agent.conf;
+    onChange = ''echo "gpg-agent change detected"; ${pkgs.gnupg}/bin/gpgconf --kill gpg-agent; ${pkgs.gnupg}/bin/gpgconf --launch gpg-agent'';
+  };
+  home.file.".gnupg/sshcontrol" = {
+    text = sshcontrol_value;
+    onChange = "${pkgs.gnupg}/bin/gpgconf --kill gpg-agent; ${pkgs.gnupg}/bin/gpgconf --launch gpg-agent";
   };
 
   programs = {
@@ -46,11 +67,27 @@
         vscode-extensions.yzhang.markdown-all-in-one
       ];
     };
+    gpg = {
+      enable = true;
+      mutableKeys = true;
+      settings = {
+        no-greeting = true;
+        auto-key-retrieve = true;
+        default-key = "0x6249C5087F5382D2";
+      };
+      scdaemonSettings = {
+        disable-ccid = true;
+      };
+    };
     git = {
       enable = true;
       package = pkgs.git;
       userName = "Frode Egeland";
       userEmail = "egeland@gmail.com";
+      signing = {
+        key = "0x6249C5087F5382D2";
+        signByDefault = true;
+      };
       delta.enable = true;
       aliases = {
         ci = "commit --signoff";
@@ -128,5 +165,7 @@
         nmap <F6> :NERDTreeToggle<CR>             " F6 opens NERDTree
       '';
     };
+  };
+  services = {
   };
 }

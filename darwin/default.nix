@@ -14,6 +14,7 @@
   home-manager,
   darwin,
   user,
+  sshcontrol_value,
   ...
 }: let
   system = "x86_64-darwin"; # System architecture
@@ -31,7 +32,7 @@ in {
         # Home-Manager module that is used
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {inherit user;}; # Pass flake variable
+        home-manager.extraSpecialArgs = {inherit user sshcontrol_value;}; # Pass flake variable
         home-manager.users.${user} = import ./home.nix;
       }
     ];

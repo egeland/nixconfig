@@ -13,39 +13,47 @@
 #   └─ ./nix
 #       └─ default.nix
 #
-
 {
   description = "My Personal NixOS and Darwin System Flake Configuration";
 
-  inputs =                                                                  # All flake references used to build my NixOS setup. These are dependencies.
+  inputs =
+    # All flake references used to build my NixOS setup. These are dependencies.
     {
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";                  # Nix Packages
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Nix Packages
 
-      home-manager = {                                                      # User Package Management
+      home-manager = {
+        # User Package Management
         url = "github:nix-community/home-manager";
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
       darwin = {
-        url = "github:lnl7/nix-darwin/master";                              # MacOS Package Management
+        url = "github:lnl7/nix-darwin/master"; # MacOS Package Management
         inputs.nixpkgs.follows = "nixpkgs";
       };
-
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
-    let                                                                     # Variables that can be used in the config files.
-      user = "frode";
-      location = "$HOME/nixconfig";
-    in                                                                      # Use above variables in ...
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    darwin,
+    ...
+  }:
+  # Function that tells my flake which to use and what do what to do with the dependencies.
+  let
+    # Variables that can be used in the config files.
+    user = "frode";
+    location = "$HOME/nixconfig";
+    sshcontrol_value = "032896FEEFADEBAF209C345A90DE6FDDD9BB2A1B";
+  in
+    # Use above variables in ...
     {
-
-      darwinConfigurations = (                                              # Darwin Configurations
+      darwinConfigurations = ( # Darwin Configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager darwin user;
+          inherit inputs nixpkgs home-manager darwin user sshcontrol_value;
         }
       );
-
     };
 }
