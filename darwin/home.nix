@@ -22,21 +22,22 @@
   home = {
     # Specific packages for macbook
     packages = with pkgs; [
-      pinentry_mac
-      pfetch
-      starship
-      fish
-      lsd
       bat
-      kitty
-      rectangle
+      fish
       fzf
-      zoxide
-      yubikey-personalization
       gnupg
+      hugo
+      kitty
+      lsd
+      pfetch
+      pinentry_mac
       python310
-      python310Packages.pip
       python310Packages.ipython
+      python310Packages.pip
+      rectangle
+      starship
+      yubikey-personalization
+      zoxide
     ];
     stateVersion = "22.05";
   };
