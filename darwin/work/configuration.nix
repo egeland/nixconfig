@@ -76,13 +76,15 @@
       #cleanup = "zap"; # Uninstall not listed packages and casks
     };
     brews = [
-      "hopenpgp-tools"
-      "ykman"
     ];
     casks = [
       "google-chrome"
+      "slack"
       # "karabiner-elements"
     ];
+    masApps = {
+      Monosnap = 540348655;
+    };
   };
 
   nix = {

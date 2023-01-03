@@ -81,16 +81,18 @@
     enable = true;
     onActivation = {
       autoUpdate = true; # Auto update packages
-      #cleanup = "zap"; # Uninstall not listed packages and casks
+      # cleanup = "uninstall"; # Uninstall not listed packages and casks
     };
     brews = [
-      "hopenpgp-tools"
-      "ykman"
+      "dvorak7min"
     ];
     casks = [
       "google-chrome"
       # "karabiner-elements"
     ];
+    masApps = {
+      Monosnap = 540348655;
+    };
   };
 
   nix = {

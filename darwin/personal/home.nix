@@ -9,11 +9,7 @@
 #       └─ ./programs
 #           └─ ./alacritty.nix
 #
-{
-  pkgs,
-  sshcontrol_value,
-  ...
-}: {
+{pkgs, ...}: {
   # imports =
   #   [
   #     ../modules/programs/alacritty.nix
@@ -23,6 +19,7 @@
     # Specific packages for macbook
     packages = with pkgs; [
       bat
+      delta
       fish
       fzf
       gnupg
@@ -34,12 +31,13 @@
       python310
       python310Packages.ipython
       python310Packages.pip
+      pwgen
       rectangle
       starship
       yubikey-personalization
       zoxide
     ];
-    stateVersion = "22.05";
+    stateVersion = "22.11";
   };
 
   # Raw config files
@@ -48,7 +46,7 @@
     onChange = ''echo "gpg-agent change detected"; ${pkgs.gnupg}/bin/gpgconf --kill gpg-agent; ${pkgs.gnupg}/bin/gpgconf --launch gpg-agent'';
   };
   home.file.".gnupg/sshcontrol" = {
-    text = sshcontrol_value;
+    text = "032896FEEFADEBAF209C345A90DE6FDDD9BB2A1B";
     onChange = "${pkgs.gnupg}/bin/gpgconf --kill gpg-agent; ${pkgs.gnupg}/bin/gpgconf --launch gpg-agent";
   };
 
@@ -102,6 +100,9 @@
         init = {
           defaultBranch = "main";
         };
+        push = {
+          autoSetupRemote = true;
+        };
       };
     };
     zsh = {
@@ -114,7 +115,13 @@
       oh-my-zsh = {
         # Extra plugins for zsh
         enable = true;
-        plugins = ["git"];
+        plugins = [
+          "fd"
+          "fzf"
+          "git"
+          "ripgrep"
+          "zoxide"
+        ];
         custom = "$HOME/.config/zsh_nix/custom";
       };
 
