@@ -49,11 +49,44 @@
   in
     # Use above variables in ...
     {
-      darwinConfigurations = ( # Darwin Configurations
-        import ./darwin/personal {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager darwin user sshcontrol_value;
-        }
-      );
+      darwinConfigurations = {
+        Frode-Egeland-2 = darwin.lib.darwinSystem {
+          # MacBookAir
+          system = "aarch64-darwin"; # System architecture
+          specialArgs = {inherit user inputs;};
+          modules = [
+            # Modules that are used
+            ./darwin/work/configuration.nix
+
+            home-manager.darwinModules.home-manager
+            {
+              # Home-Manager module that is used
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit user sshcontrol_value;}; # Pass flake variable
+              home-manager.users.${user} = import ./darwin/work/home.nix;
+            }
+          ];
+        };
+
+        high-hrothgar = darwin.lib.darwinSystem {
+          # MacBookAir
+          system = "x86_64-darwin"; # System architecture
+          specialArgs = {inherit user inputs;};
+          modules = [
+            # Modules that are used
+            ./darwin/personal/configuration.nix
+
+            home-manager.darwinModules.home-manager
+            {
+              # Home-Manager module that is used
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit user sshcontrol_value;}; # Pass flake variable
+              home-manager.users.${user} = import ./darwin/personal/home.nix;
+            }
+          ];
+        };
+      };
     };
 }

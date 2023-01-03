@@ -23,7 +23,6 @@
     # Specific packages for macbook
     packages = with pkgs; [
       bat
-      fish
       fzf
       gnupg
       hugo
@@ -36,10 +35,9 @@
       python310Packages.pip
       rectangle
       starship
-      yubikey-personalization
       zoxide
     ];
-    stateVersion = "22.05";
+    stateVersion = "22.11";
   };
 
   # Raw config files
@@ -85,7 +83,7 @@
       enable = true;
       package = pkgs.git;
       userName = "Frode Egeland";
-      userEmail = "egeland@gmail.com";
+      userEmail = "frode@identitii.com";
       signing = {
         key = "0x6249C5087F5382D2";
         signByDefault = true;

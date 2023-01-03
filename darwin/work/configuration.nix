@@ -1,11 +1,3 @@
-#
-#  Specific system configuration settings for MacBook
-#
-#  flake.nix
-#   └─ ./darwin
-#       ├─ ./default.nix
-#       └─ ./configuration.nix *
-#
 {
   config,
   pkgs,
@@ -20,8 +12,8 @@
   };
 
   networking = {
-    computerName = "high-hrothgar"; # Host name
-    hostName = "high-hrothgar";
+    computerName = "Frode Egeland 2"; # Host name
+    hostName = "Frode-Egeland-2";
   };
 
   security.pam.enableSudoTouchIdAuth = true;
