@@ -50,7 +50,7 @@
     # Use above variables in ...
     {
       darwinConfigurations = ( # Darwin Configurations
-        import ./darwin {
+        import ./darwin/personal {
           inherit (nixpkgs) lib;
           inherit inputs nixpkgs home-manager darwin user sshcontrol_value;
         }
