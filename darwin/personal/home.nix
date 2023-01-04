@@ -49,6 +49,9 @@
     text = "032896FEEFADEBAF209C345A90DE6FDDD9BB2A1B";
     onChange = "${pkgs.gnupg}/bin/gpgconf --kill gpg-agent; ${pkgs.gnupg}/bin/gpgconf --launch gpg-agent";
   };
+  home.file.".config/karabiner/karabiner.json" = {
+    source = ../common/karabiner.json;
+  };
 
   programs = {
     vscode = {

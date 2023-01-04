@@ -66,6 +66,7 @@
 
   services = {
     nix-daemon.enable = true; # Auto upgrade daemon
+    karabiner-elements.enable = true;
   };
 
   homebrew = {
@@ -80,7 +81,6 @@
     casks = [
       "google-chrome"
       "slack"
-      # "karabiner-elements"
     ];
     masApps = {
       Monosnap = 540348655;
