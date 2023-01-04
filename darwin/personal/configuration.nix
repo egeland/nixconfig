@@ -74,6 +74,7 @@
 
   services = {
     nix-daemon.enable = true; # Auto upgrade daemon
+    karabiner-elements.enable = true;
   };
 
   homebrew = {
@@ -83,12 +84,15 @@
       autoUpdate = true; # Auto update packages
       # cleanup = "uninstall"; # Uninstall not listed packages and casks
     };
+    taps = [
+      "gromgit/fuse"
+    ];
     brews = [
       "dvorak7min"
     ];
     casks = [
       "google-chrome"
-      # "karabiner-elements"
+      "macfuse"
     ];
     masApps = {
       Monosnap = 540348655;
