@@ -82,6 +82,7 @@
         auto-key-retrieve = true;
         default-key = "0xCEB73EDF3CD29D45";
         trusted-key = "0xCEB73EDF3CD29D45";
+        keyserver = "hkps://keyserver.ubuntu.com";
       };
       scdaemonSettings = {
         disable-ccid = true;
