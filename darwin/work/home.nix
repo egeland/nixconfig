@@ -80,8 +80,8 @@
       settings = {
         no-greeting = true;
         auto-key-retrieve = true;
-        default-key = "F7BF5887C4DC446F74EC91870A32DE835F49CC7B";
-        trusted-key = "F7BF5887C4DC446F74EC91870A32DE835F49CC7B";
+        default-key = "0xCEB73EDF3CD29D45";
+        trusted-key = "0xCEB73EDF3CD29D45";
       };
       scdaemonSettings = {
         disable-ccid = true;
@@ -93,7 +93,7 @@
       userName = "Frode Egeland";
       userEmail = "frode@identitii.com";
       signing = {
-        key = "F7BF5887C4DC446F74EC91870A32DE835F49CC7B";
+        key = "0xCEB73EDF3CD29D45";
         signByDefault = true;
       };
       delta.enable = true;

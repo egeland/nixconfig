@@ -79,8 +79,6 @@
     brews = [
     ];
     casks = [
-      "google-chrome"
-      "slack"
     ];
     masApps = {
       Monosnap = 540348655;
@@ -146,9 +144,9 @@
     };
     activationScripts.postActivation.text = ''
       # sudo chsh -s ${pkgs.zsh}/bin/zsh ; # Since it's not possible to declare default shell, run this command after build
-      # ./darwin/dock.sh; # set up the dock
+      # ./darwin/work/dock.sh; # set up the dock
       # /etc/profiles/per-user/frode/bin/gpgconf --kill gpg-agent; echo "=== START A NEW SHELL NOW ==="
-      # grep -A 22 -- '----BEGIN PGP PUBLIC KEY BLOCK-----' <(curl -s $(${pkgs.gnupg}/bin/gpg --card-status | grep 'URL of public key' | awk '{print $6}')) | ${pkgs.gnupg}/bin/gpg --import
+      # grep -A 95 -- '----BEGIN PGP PUBLIC KEY BLOCK-----' <(curl -s $(${pkgs.gnupg}/bin/gpg --card-status | grep 'URL of public key' | awk '{print $6}')) | ${pkgs.gnupg}/bin/gpg --import
     '';
     stateVersion = 4;
   };
