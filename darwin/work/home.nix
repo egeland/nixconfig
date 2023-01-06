@@ -137,9 +137,9 @@
       };
 
       initExtra = ''
-        # Spaceship
-        source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
         autoload -U promptinit; promptinit
+        eval "$(starship init zsh)"
+        alias ls="lsd"
         pfetch
       ''; # Zsh theme
     };
