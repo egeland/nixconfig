@@ -129,11 +129,17 @@
       };
 
       initExtra = ''
-        # Spaceship
-        source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
         autoload -U promptinit; promptinit
         pfetch
-      ''; # Zsh theme
+      '';
+    };
+    starship = {
+      enable = true;
+      settings = {
+        sudo = {
+          disabled = false;
+        };
+      };
     };
     neovim = {
       enable = true;

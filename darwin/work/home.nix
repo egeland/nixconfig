@@ -136,12 +136,25 @@
         custom = "$HOME/.config/zsh_nix/custom";
       };
 
+      shellAliases = {
+        ls = "lsd";
+      };
+
       initExtra = ''
         autoload -U promptinit; promptinit
-        eval "$(starship init zsh)"
-        alias ls="lsd"
         pfetch
-      ''; # Zsh theme
+      '';
+    };
+    starship = {
+      enable = true;
+      settings = {
+        kubernetes = {
+          disabled = false;
+        };
+        sudo = {
+          disabled = false;
+        };
+      };
     };
     neovim = {
       enable = true;
