@@ -89,6 +89,7 @@
     ];
     brews = [
       "dvorak7min"
+      "klavaro"
     ];
     casks = [
       "google-chrome"
