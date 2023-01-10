@@ -54,6 +54,11 @@
   };
 
   programs = {
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
     vscode = {
       enable = true;
       package = pkgs.vscode;
@@ -77,6 +82,7 @@
         auto-key-retrieve = true;
         default-key = "0x6249C5087F5382D2";
         trusted-key = "0x6249C5087F5382D2";
+        keyserver = "hkps://keyserver.ubuntu.com";
       };
       scdaemonSettings = {
         disable-ccid = true;
@@ -126,6 +132,13 @@
           "zoxide"
         ];
         custom = "$HOME/.config/zsh_nix/custom";
+      };
+
+      shellAliases = {
+        c = "z";
+        ci = "zi";
+        ls = "lsd";
+        rb = "pushd ~/nixconfig; darwin-rebuild switch --verbose --flake .#$(hostname -s); popd";
       };
 
       initExtra = ''
