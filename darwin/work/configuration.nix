@@ -49,6 +49,9 @@
     ];
     systemPath = [
       "/etc/profiles/per-user/frode/bin/libexec"
+      "~/bin"
+      "~/.tfenv/bin"
+      "/opt/homebrew/bin"
     ];
   };
 
@@ -77,6 +80,7 @@
       #cleanup = "zap"; # Uninstall not listed packages and casks
     };
     brews = [
+      "tfenv"
     ];
     casks = [
     ];

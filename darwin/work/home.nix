@@ -35,7 +35,8 @@
       skopeo
       starship
       step-cli
-      tfswitch
+      tfsec
+      # tfswitch
       tgswitch
       tree
       wget
@@ -58,6 +59,11 @@
   };
 
   programs = {
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
     vscode = {
       enable = true;
       package = pkgs.vscode;
@@ -137,7 +143,12 @@
       };
 
       shellAliases = {
+        c = "z";
+        ci = "zi";
+        kns = "kubens";
+        kx = "kubectx";
         ls = "lsd";
+        rb = "pushd ~/nixconfig; NIXPKGS_ALLOW_BROKEN=1 darwin-rebuild switch --verbose --flake .#$(hostname -s) --impure; popd";
       };
 
       initExtra = ''
@@ -154,6 +165,11 @@
         sudo = {
           disabled = false;
         };
+        # custom = {
+        #   awscreds = {
+        #     when = "test ! -z ";
+        #   };
+        # };
       };
     };
     neovim = {
