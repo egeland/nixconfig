@@ -52,6 +52,8 @@
       "~/bin"
       "~/.tfenv/bin"
       "/opt/homebrew/bin"
+      "~/.krew/bin"
+      "~/.rd/bin"
     ];
   };
 
@@ -83,6 +85,7 @@
       "tfenv"
     ];
     casks = [
+      "rancher"
     ];
     masApps = {
       Monosnap = 540348655;

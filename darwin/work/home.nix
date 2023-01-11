@@ -6,7 +6,7 @@
 
   home = {
     packages = with pkgs; [
-      awscli
+      awscli2
       azure-cli
       bat
       delta
@@ -120,6 +120,14 @@
         };
       };
     };
+    kitty = {
+      enable = true;
+      theme = "Jellybeans";
+      font = {
+        size = 18;
+        name = "FiraCode";
+      };
+    };
     zsh = {
       # Post installation script is run in configuration.nix to make it default shell
       enable = true;
@@ -143,6 +151,7 @@
           "zoxide"
         ];
         custom = "$HOME/.config/zsh_nix/custom";
+        theme = "fishy";
       };
 
       shellAliases = {
