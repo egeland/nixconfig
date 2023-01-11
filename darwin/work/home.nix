@@ -1,45 +1,48 @@
-#
-#  Home-manager configuration for macbook
-#
-#  flake.nix
-#   ├─ ./darwin
-#   │   ├─ ./default.nix
-#   │   └─ ./home.nix *
-#   └─ ./modules
-#       └─ ./programs
-#           └─ ./alacritty.nix
-#
-{
-  pkgs,
-  sshcontrol_value,
-  ...
-}: {
+{pkgs, ...}: {
   # imports =
   #   [
   #     ../modules/programs/alacritty.nix
   #   ];
 
   home = {
-    # Specific packages for macbook
     packages = with pkgs; [
+      awscli2
+      azure-cli
       bat
-      fish
+      delta
       fzf
       gnupg
-      hugo
+      gnused
+      go
+      google-cloud-sdk
+      gron
+      jq
+      k9s
       kitty
+      kubectl
+      kubectx
+      kubernetes-helm-wrapped
+      kubeseal
+      kustomize
       lsd
       pfetch
       pinentry_mac
       python310
       python310Packages.ipython
       python310Packages.pip
+      pwgen
       rectangle
+      skopeo
       starship
-      yubikey-personalization
+      step-cli
+      tfsec
+      # tfswitch
+      tgswitch
+      tree
+      wget
       zoxide
     ];
-    stateVersion = "22.05";
+    stateVersion = "22.11";
   };
 
   # Raw config files
@@ -48,17 +51,26 @@
     onChange = ''echo "gpg-agent change detected"; ${pkgs.gnupg}/bin/gpgconf --kill gpg-agent; ${pkgs.gnupg}/bin/gpgconf --launch gpg-agent'';
   };
   home.file.".gnupg/sshcontrol" = {
-    text = sshcontrol_value;
+    text = "1A105CA1DD29DEBF07F931A73E1B60332371724F";
     onChange = "${pkgs.gnupg}/bin/gpgconf --kill gpg-agent; ${pkgs.gnupg}/bin/gpgconf --launch gpg-agent";
+  };
+  home.file.".config/karabiner/karabiner.json" = {
+    source = ../common/karabiner.json;
   };
 
   programs = {
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
     vscode = {
       enable = true;
       package = pkgs.vscode;
       enableExtensionUpdateCheck = true;
       extensions = with pkgs; [
         vscode-extensions.bbenoist.nix
+        vscode-extensions.hashicorp.terraform
         vscode-extensions.kamadorueda.alejandra
         vscode-extensions.ms-python.python
         vscode-extensions.mhutchie.git-graph
@@ -74,8 +86,9 @@
       settings = {
         no-greeting = true;
         auto-key-retrieve = true;
-        default-key = "0x6249C5087F5382D2";
-        trusted-key = "0x6249C5087F5382D2";
+        default-key = "0xCEB73EDF3CD29D45";
+        trusted-key = "0xCEB73EDF3CD29D45";
+        keyserver = "hkps://keyserver.ubuntu.com";
       };
       scdaemonSettings = {
         disable-ccid = true;
@@ -85,9 +98,9 @@
       enable = true;
       package = pkgs.git;
       userName = "Frode Egeland";
-      userEmail = "egeland@gmail.com";
+      userEmail = "frode@identitii.com";
       signing = {
-        key = "0x6249C5087F5382D2";
+        key = "0xCEB73EDF3CD29D45";
         signByDefault = true;
       };
       delta.enable = true;
@@ -102,6 +115,17 @@
         init = {
           defaultBranch = "main";
         };
+        push = {
+          autoSetupRemote = true;
+        };
+      };
+    };
+    kitty = {
+      enable = true;
+      theme = "Jellybeans";
+      font = {
+        size = 18;
+        name = "FiraCode";
       };
     };
     zsh = {
@@ -114,16 +138,51 @@
       oh-my-zsh = {
         # Extra plugins for zsh
         enable = true;
-        plugins = ["git"];
+        plugins = [
+          "aws"
+          "fd"
+          "fzf"
+          "gcloud"
+          "git"
+          "helm"
+          "kubectl"
+          "kubectx"
+          "ripgrep"
+          "zoxide"
+        ];
         custom = "$HOME/.config/zsh_nix/custom";
+        theme = "fishy";
+      };
+
+      shellAliases = {
+        c = "z";
+        ci = "zi";
+        kns = "kubens";
+        kx = "kubectx";
+        ls = "lsd";
+        rb = "pushd ~/nixconfig; NIXPKGS_ALLOW_BROKEN=1 darwin-rebuild switch --verbose --flake .#$(hostname -s) --impure; popd";
       };
 
       initExtra = ''
-        # Spaceship
-        source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
         autoload -U promptinit; promptinit
         pfetch
-      ''; # Zsh theme
+      '';
+    };
+    starship = {
+      enable = true;
+      settings = {
+        kubernetes = {
+          disabled = false;
+        };
+        sudo = {
+          disabled = false;
+        };
+        # custom = {
+        #   awscreds = {
+        #     when = "test ! -z ";
+        #   };
+        # };
+      };
     };
     neovim = {
       enable = true;

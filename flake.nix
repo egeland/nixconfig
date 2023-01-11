@@ -1,37 +1,20 @@
-#
-#  G'Day
-#  Behold is my personal Nix, NixOS and Darwin Flake.
-#  I'm not the sharpest tool in the shed, so this build might not be the best out there.
-#  I refer to the README and other org document on how to use these files.
-#  Currently and possibly forever a Work In Progress.
-#
-#  flake.nix *
-#   ├─ ./hosts
-#   │   └─ default.nix
-#   ├─ ./darwin
-#   │   └─ default.nix
-#   └─ ./nix
-#       └─ default.nix
-#
 {
   description = "My Personal NixOS and Darwin System Flake Configuration";
 
-  inputs =
-    # All flake references used to build my NixOS setup. These are dependencies.
-    {
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Nix Packages
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Nix Packages
 
-      home-manager = {
-        # User Package Management
-        url = "github:nix-community/home-manager";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
-
-      darwin = {
-        url = "github:lnl7/nix-darwin/master"; # MacOS Package Management
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
+    home-manager = {
+      # User Package Management
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    darwin = {
+      url = "github:lnl7/nix-darwin/master"; # MacOS Package Management
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
   outputs = inputs @ {
     self,
@@ -45,15 +28,47 @@
     # Variables that can be used in the config files.
     user = "frode";
     location = "$HOME/nixconfig";
-    sshcontrol_value = "032896FEEFADEBAF209C345A90DE6FDDD9BB2A1B";
   in
     # Use above variables in ...
     {
-      darwinConfigurations = ( # Darwin Configurations
-        import ./darwin {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager darwin user sshcontrol_value;
-        }
-      );
+      darwinConfigurations = {
+        Frode-Egeland-2 = darwin.lib.darwinSystem {
+          # MacBookAir
+          system = "aarch64-darwin"; # System architecture
+          specialArgs = {inherit user inputs;};
+          modules = [
+            # Modules that are used
+            ./darwin/work/configuration.nix
+
+            home-manager.darwinModules.home-manager
+            {
+              # Home-Manager module that is used
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit user;}; # Pass flake variable
+              home-manager.users.${user} = import ./darwin/work/home.nix;
+            }
+          ];
+        };
+
+        high-hrothgar = darwin.lib.darwinSystem {
+          # MacBookAir
+          system = "x86_64-darwin"; # System architecture
+          specialArgs = {inherit user inputs;};
+          modules = [
+            # Modules that are used
+            ./darwin/personal/configuration.nix
+
+            home-manager.darwinModules.home-manager
+            {
+              # Home-Manager module that is used
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit user;}; # Pass flake variable
+              home-manager.users.${user} = import ./darwin/personal/home.nix;
+            }
+          ];
+        };
+      };
     };
 }

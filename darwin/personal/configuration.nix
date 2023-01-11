@@ -57,6 +57,8 @@
     ];
     systemPath = [
       "/etc/profiles/per-user/frode/bin/libexec"
+      "~/bin"
+      "/opt/homebrew/bin"
     ];
   };
 
@@ -74,6 +76,7 @@
 
   services = {
     nix-daemon.enable = true; # Auto upgrade daemon
+    karabiner-elements.enable = true;
   };
 
   homebrew = {
@@ -81,16 +84,23 @@
     enable = true;
     onActivation = {
       autoUpdate = true; # Auto update packages
-      #cleanup = "zap"; # Uninstall not listed packages and casks
+      # cleanup = "uninstall"; # Uninstall not listed packages and casks
     };
+    taps = [
+      "gromgit/fuse"
+    ];
     brews = [
-      "hopenpgp-tools"
-      "ykman"
+      "dvorak7min"
+      "klavaro"
     ];
     casks = [
       "google-chrome"
-      # "karabiner-elements"
+      "macfuse"
+      "freecad"
     ];
+    masApps = {
+      Monosnap = 540348655;
+    };
   };
 
   nix = {
@@ -152,9 +162,9 @@
     };
     activationScripts.postActivation.text = ''
       # sudo chsh -s ${pkgs.zsh}/bin/zsh ; # Since it's not possible to declare default shell, run this command after build
-      # ./darwin/dock.sh; # set up the dock
+      # ./darwin/personal/dock.sh; # set up the dock
       # /etc/profiles/per-user/frode/bin/gpgconf --kill gpg-agent; echo "=== START A NEW SHELL NOW ==="
-      # grep -A 22 -- '----BEGIN PGP PUBLIC KEY BLOCK-----' <(curl -s $(${pkgs.gnupg}/bin/gpg --card-status | grep 'URL of public key' | awk '{print $6}')) | ${pkgs.gnupg}/bin/gpg --import
+      # ${pkgs.gnupg}/bin/gpg --search-key $(gpg --card-status | awk '/General key/ { sub(/.*\//, "", $5); print $5}')
     '';
     stateVersion = 4;
   };
