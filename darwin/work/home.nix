@@ -68,17 +68,32 @@
       enable = true;
       package = pkgs.vscode;
       enableExtensionUpdateCheck = true;
-      extensions = with pkgs; [
-        vscode-extensions.bbenoist.nix
-        vscode-extensions.hashicorp.terraform
-        vscode-extensions.kamadorueda.alejandra
-        vscode-extensions.ms-python.python
-        vscode-extensions.mhutchie.git-graph
-        vscode-extensions.timonwong.shellcheck
-        vscode-extensions.oderwat.indent-rainbow
-        vscode-extensions.donjayamanne.githistory
-        vscode-extensions.yzhang.markdown-all-in-one
-      ];
+      extensions = with pkgs;
+        [
+          vscode-extensions.bbenoist.nix
+          vscode-extensions.hashicorp.terraform
+          vscode-extensions.kamadorueda.alejandra
+          vscode-extensions.ms-python.python
+          vscode-extensions.mhutchie.git-graph
+          vscode-extensions.timonwong.shellcheck
+          vscode-extensions.oderwat.indent-rainbow
+          vscode-extensions.donjayamanne.githistory
+          vscode-extensions.yzhang.markdown-all-in-one
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "hcl";
+            publisher = "hashicorp";
+            version = "0.3.2";
+            sha256 = "cxF3knYY29PvT3rkRS8SGxMn9vzt56wwBXpk2PqO0mo=";
+          }
+          {
+            name = "strict-whitespace";
+            publisher = "sidp";
+            version = "0.0.2";
+            sha256 = "4kSlfuuvDv54/cVpsvLlejQVpNvMxdTOa9QAf1xXsXM=";
+          }
+        ];
     };
     gpg = {
       enable = true;
