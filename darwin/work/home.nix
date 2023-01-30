@@ -192,13 +192,13 @@
         ls = "lsd";
         rb = "pushd ~/nixconfig; NIXPKGS_ALLOW_BROKEN=1 darwin-rebuild switch --verbose --flake .#$(hostname -s) --impure; popd";
         gclean = "git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d";
+        aws = "PAGER=cat aws";
       };
 
       initExtra = ''
         EDITOR="code --wait"
         VISUAL="code --wait"
-        PAGER="cat"
-        export EDITOR VISUAL PAGER
+        export EDITOR VISUAL
         autoload -U promptinit; promptinit
         pfetch
       '';
