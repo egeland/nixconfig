@@ -85,7 +85,9 @@
       "tfenv"
     ];
     casks = [
+      "alfred"
       "rancher"
+      "securid"
     ];
     masApps = {
       Monosnap = 540348655;

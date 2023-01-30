@@ -35,6 +35,7 @@
       skopeo
       starship
       step-cli
+      tfk8s
       tfsec
       # tfswitch
       tgswitch
@@ -71,13 +72,15 @@
       extensions = with pkgs;
         [
           vscode-extensions.bbenoist.nix
+          vscode-extensions.donjayamanne.githistory
+          vscode-extensions.eamodio.gitlens
           vscode-extensions.hashicorp.terraform
           vscode-extensions.kamadorueda.alejandra
-          vscode-extensions.ms-python.python
           vscode-extensions.mhutchie.git-graph
-          vscode-extensions.timonwong.shellcheck
+          vscode-extensions.ms-python.python
           vscode-extensions.oderwat.indent-rainbow
-          vscode-extensions.donjayamanne.githistory
+          vscode-extensions.redhat.vscode-yaml
+          vscode-extensions.timonwong.shellcheck
           vscode-extensions.yzhang.markdown-all-in-one
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
@@ -92,6 +95,18 @@
             publisher = "sidp";
             version = "0.0.2";
             sha256 = "4kSlfuuvDv54/cVpsvLlejQVpNvMxdTOa9QAf1xXsXM=";
+          }
+          {
+            name = "vscode-github-actions";
+            publisher = "me-dutour-mathieu";
+            version = "3.0.1";
+            sha256 = "I5qZk/svJIlnV2ggwMLu5Bfvly3vyshT5y51V4/nQLI=";
+          }
+          {
+            name = "vscode-hcl-format";
+            publisher = "fredwangwang";
+            version = "1.0.0";
+            sha256 = "8UhTlGGzQBort5hoUtT/isxRL64fY4uiWVMqNkj2rs8=";
           }
         ];
     };
@@ -180,6 +195,10 @@
       };
 
       initExtra = ''
+        EDITOR="code --wait"
+        VISUAL="code --wait"
+        PAGER="cat"
+        export EDITOR VISUAL PAGER
         autoload -U promptinit; promptinit
         pfetch
       '';
