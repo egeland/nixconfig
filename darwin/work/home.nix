@@ -27,14 +27,15 @@
       lsd
       pfetch
       pinentry_mac
-      python310
-      python310Packages.ipython
-      python310Packages.pip
+      # python310
+      # python310Packages.ipython
+      # python310Packages.pip
       pwgen
       rectangle
       skopeo
       starship
       step-cli
+      tfk8s
       tfsec
       # tfswitch
       tgswitch
@@ -68,17 +69,52 @@
       enable = true;
       package = pkgs.vscode;
       enableExtensionUpdateCheck = true;
-      extensions = with pkgs; [
-        vscode-extensions.bbenoist.nix
-        vscode-extensions.hashicorp.terraform
-        vscode-extensions.kamadorueda.alejandra
-        vscode-extensions.ms-python.python
-        vscode-extensions.mhutchie.git-graph
-        vscode-extensions.timonwong.shellcheck
-        vscode-extensions.oderwat.indent-rainbow
-        vscode-extensions.donjayamanne.githistory
-        vscode-extensions.yzhang.markdown-all-in-one
-      ];
+      extensions = with pkgs;
+        [
+          vscode-extensions.bbenoist.nix
+          vscode-extensions.donjayamanne.githistory
+          vscode-extensions.eamodio.gitlens
+          vscode-extensions.hashicorp.terraform
+          vscode-extensions.kamadorueda.alejandra
+          vscode-extensions.mhutchie.git-graph
+          vscode-extensions.ms-python.python
+          vscode-extensions.oderwat.indent-rainbow
+          vscode-extensions.redhat.vscode-yaml
+          vscode-extensions.timonwong.shellcheck
+          vscode-extensions.yzhang.markdown-all-in-one
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "hcl";
+            publisher = "hashicorp";
+            version = "0.3.2";
+            sha256 = "cxF3knYY29PvT3rkRS8SGxMn9vzt56wwBXpk2PqO0mo=";
+          }
+          {
+            name = "strict-whitespace";
+            publisher = "sidp";
+            version = "0.0.2";
+            sha256 = "4kSlfuuvDv54/cVpsvLlejQVpNvMxdTOa9QAf1xXsXM=";
+          }
+          {
+            name = "vscode-github-actions";
+            publisher = "me-dutour-mathieu";
+            version = "3.0.1";
+            sha256 = "I5qZk/svJIlnV2ggwMLu5Bfvly3vyshT5y51V4/nQLI=";
+          }
+          {
+            name = "vscode-hcl-format";
+            publisher = "fredwangwang";
+            version = "1.0.0";
+            sha256 = "8UhTlGGzQBort5hoUtT/isxRL64fY4uiWVMqNkj2rs8=";
+          }
+          {
+            name = "file-downloader";
+            publisher = "mindaro-dev";
+            version = "1.0.12";
+            sha256 = "wOQqX1YH33immM5z9hP10N25BfV1ViSq30kU7zRCZP8=";
+          }
+        ];
     };
     gpg = {
       enable = true;
@@ -161,9 +197,15 @@
         kx = "kubectx";
         ls = "lsd";
         rb = "pushd ~/nixconfig; NIXPKGS_ALLOW_BROKEN=1 darwin-rebuild switch --verbose --flake .#$(hostname -s) --impure; popd";
+        gclean = "git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d";
+        aws = "PAGER=cat aws";
       };
 
       initExtra = ''
+        EDITOR="code --wait"
+        VISUAL="code --wait"
+        PATH="~/.local/bin:$PATH"
+        export EDITOR VISUAL PATH
         autoload -U promptinit; promptinit
         pfetch
       '';
