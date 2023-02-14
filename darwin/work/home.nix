@@ -27,9 +27,9 @@
       lsd
       pfetch
       pinentry_mac
-      python310
-      python310Packages.ipython
-      python310Packages.pip
+      # python310
+      # python310Packages.ipython
+      # python310Packages.pip
       pwgen
       rectangle
       skopeo
@@ -107,6 +107,12 @@
             publisher = "fredwangwang";
             version = "1.0.0";
             sha256 = "8UhTlGGzQBort5hoUtT/isxRL64fY4uiWVMqNkj2rs8=";
+          }
+          {
+            name = "file-downloader";
+            publisher = "mindaro-dev";
+            version = "1.0.12";
+            sha256 = "wOQqX1YH33immM5z9hP10N25BfV1ViSq30kU7zRCZP8=";
           }
         ];
     };
@@ -198,7 +204,8 @@
       initExtra = ''
         EDITOR="code --wait"
         VISUAL="code --wait"
-        export EDITOR VISUAL
+        PATH="~/.local/bin:$PATH"
+        export EDITOR VISUAL PATH
         autoload -U promptinit; promptinit
         pfetch
       '';
