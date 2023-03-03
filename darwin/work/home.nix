@@ -114,6 +114,12 @@
             version = "1.0.12";
             sha256 = "wOQqX1YH33immM5z9hP10N25BfV1ViSq30kU7zRCZP8=";
           }
+          {
+            name = "vscode-yaml-sort";
+            publisher = "PascalReitermann93";
+            version = "6.5.0";
+            sha256 = "06BSEQQz9319WOcmgv2JhrGD3FoumpNk+FWkso0Vr7M=";
+          }
         ];
     };
     gpg = {
@@ -191,14 +197,15 @@
       };
 
       shellAliases = {
+        aws = "PAGER=cat aws";
         c = "z";
         ci = "zi";
+        gclean = "git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d";
         kns = "kubens";
         kx = "kubectx";
         ls = "lsd";
         rb = "pushd ~/nixconfig; NIXPKGS_ALLOW_BROKEN=1 darwin-rebuild switch --verbose --flake .#$(hostname -s) --impure; popd";
-        gclean = "git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d";
-        aws = "PAGER=cat aws";
+        s = "kitty +kitten ssh";
       };
 
       initExtra = ''

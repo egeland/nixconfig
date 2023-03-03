@@ -32,7 +32,7 @@
     # Use above variables in ...
     {
       darwinConfigurations = {
-        Frode-Egeland-2 = darwin.lib.darwinSystem {
+        Frode-Egeland = darwin.lib.darwinSystem {
           # MacBookAir
           system = "aarch64-darwin"; # System architecture
           specialArgs = {inherit user inputs;};
