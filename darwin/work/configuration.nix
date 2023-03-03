@@ -12,8 +12,8 @@
   };
 
   networking = {
-    computerName = "Frode Egeland 2"; # Host name
-    hostName = "Frode-Egeland-2";
+    computerName = "Frode Egeland"; # Host name
+    hostName = "Frode-Egeland";
   };
 
   security.pam.enableSudoTouchIdAuth = true;
