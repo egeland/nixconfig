@@ -27,14 +27,15 @@ dockutil --no-restart --section apps --add "/System/Applications/Launchpad.app"
 # dockutil --no-restart --section apps --add "/System/Applications/TV.app"
 # dockutil --no-restart --section apps --add "/System/Applications/Books.app"
 # dockutil --no-restart --section apps --add "/System/Applications/App Store.app"
-dockutil --no-restart --section apps --add "/System/Applications/System Preferences.app"
+dockutil --no-restart --section apps --add "/System/Applications/System Settings.app"
 
 # Custom Apps
+dockutil --no-restart --section apps --add "/Applications/Arc.app"
 dockutil --no-restart --section apps --add "/Applications/Google Chrome.app"
 dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/Visual Studio Code.app"
 dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/kitty.app"
 
-dockutil --add '' --type spacer --section apps --after "System Preferences"
+dockutil --add '' --type spacer --section apps --after "System Settings"
 dockutil --add '' --type spacer --section apps --after "kitty"
 
 # Default Others
