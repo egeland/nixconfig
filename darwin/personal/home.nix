@@ -63,16 +63,28 @@
       enable = true;
       package = pkgs.vscode;
       enableExtensionUpdateCheck = true;
-      extensions = with pkgs; [
-        vscode-extensions.bbenoist.nix
-        vscode-extensions.kamadorueda.alejandra
-        vscode-extensions.ms-python.python
-        vscode-extensions.mhutchie.git-graph
-        vscode-extensions.timonwong.shellcheck
-        vscode-extensions.oderwat.indent-rainbow
-        vscode-extensions.donjayamanne.githistory
-        vscode-extensions.yzhang.markdown-all-in-one
-      ];
+      extensions = with pkgs;
+        [
+          vscode-extensions.bbenoist.nix
+          vscode-extensions.bungcip.better-toml
+          vscode-extensions.donjayamanne.githistory
+          vscode-extensions.kamadorueda.alejandra
+          vscode-extensions.mhutchie.git-graph
+          vscode-extensions.ms-python.python
+          vscode-extensions.oderwat.indent-rainbow
+          vscode-extensions.rust-lang.rust-analyzer
+          vscode-extensions.serayuzgur.crates
+          vscode-extensions.timonwong.shellcheck
+          vscode-extensions.yzhang.markdown-all-in-one
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "prettier-rust";
+            publisher = "jinxdash";
+            version = "0.1.9";
+            sha256 = "";
+          }
+        ];
     };
     gpg = {
       enable = true;
