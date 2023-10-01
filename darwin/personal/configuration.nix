@@ -91,12 +91,10 @@
     ];
     brews = [
       "dvorak7min"
-      "klavaro"
     ];
     casks = [
       "google-chrome"
       "macfuse"
-      "freecad"
     ];
     masApps = {
       Monosnap = 540348655;

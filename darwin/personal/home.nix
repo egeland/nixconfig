@@ -18,6 +18,7 @@
   home = {
     # Specific packages for macbook
     packages = with pkgs; [
+      alacritty
       bat
       delta
       fish
@@ -25,12 +26,13 @@
       gnupg
       hugo
       kitty
+      lazygit
       lsd
       pfetch
       pinentry_mac
-      python310
-      python310Packages.ipython
-      python310Packages.pip
+      #python310
+      #python310Packages.ipython
+      #python310Packages.pip
       pwgen
       rectangle
       starship
@@ -54,6 +56,46 @@
   };
 
   programs = {
+    alacritty = {
+	  enable = true;
+	  package = pkgs.alacritty;
+	  settings = {
+	  	font = {
+		  size = 18.0;
+	  	  normal = {
+	  	    family = "FiraCode Nerd Font";
+	  	    style = "Regular";
+	  	  };
+	  	  bold = {
+	  	    family = "FiraCode Nerd Font";
+	  	    style = "Bold";
+	  	  };
+	  	};
+		window = {
+		  dimensions = {
+		    columns = 100;
+		    lines = 30;
+		  };
+		  position = {
+		    x = 0;
+		    y = 0;
+		  };
+		  padding = {
+		    x = 10;
+		    y = 10;
+		  };
+		  # dynamicPadding = true;
+		  decorations = "Full";
+		  opacity = 0.95;
+		};
+		scrolling = {
+		  historySize = 10000;
+		};
+		mouse = {
+		  hideWhenTyping = true;
+		};
+	  };
+	};
     direnv = {
       enable = true;
       enableZshIntegration = true;
@@ -82,7 +124,7 @@
             name = "prettier-rust";
             publisher = "jinxdash";
             version = "0.1.9";
-            sha256 = "";
+            sha256 = "sha256-pb3I0NT72wKlnhw3O3vumia13tqXU3wbYi33WsI/uY0=";
           }
         ];
     };
@@ -130,7 +172,7 @@
       # Post installation script is run in configuration.nix to make it default shell
       enable = true;
       enableAutosuggestions = true; # Auto suggest options and highlights syntax. It searches in history for options
-      enableSyntaxHighlighting = true;
+      syntaxHighlighting.enable = true;
       history.size = 10000;
 
       oh-my-zsh = {
@@ -166,46 +208,136 @@
         };
       };
     };
-    neovim = {
+    neovim = 
+    let
+      toLua = str: "lua << EOF\n${str}\nEOF\n";
+      toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
+    in
+    {
       enable = true;
+      defaultEditor = true;
       viAlias = true;
       vimAlias = true;
+      vimdiffAlias = true;
 
       plugins = with pkgs.vimPlugins; [
-        # Syntax
-        vim-nix
-        vim-markdown
-
         # Quality of life
         vim-lastplace # Opens document where you left it
         auto-pairs # Print double quotes/brackets/etc.
         vim-gitgutter # See uncommitted changes of file :GitGutterEnable
+	whitespace-nvim # Highlight trailing whitespace   
 
         # File Tree
-        nerdtree # File Manager - set in extraConfig to F6
+        # {
+	#   plugin = nerdtree; # File Manager - set in extraConfig to F6
+        #   config = "nmap <F6> :NERDTreeToggle<CR>";
+	# }
+	{
+	  plugin = nvim-tree-lua;
+	  config = toLua "require(\"nvim-tree\").setup()";
+	}
 
         # Customization
         wombat256-vim # Color scheme for lightline
-        srcery-vim # Color scheme for text
-
+        {
+	  plugin = tokyonight-nvim;
+	  config = "colorscheme tokyonight";
+	}
         lightline-vim # Info bar at bottom
         indent-blankline-nvim # Indentation lines
+
+	# AI
+	copilot-vim
+
+        # Treesitter
+        nvim-treesitter
+        nvim-treesitter-parsers.rust
+        nvim-treesitter-parsers.python
+        nvim-treesitter-parsers.requirements
+        nvim-treesitter-parsers.yaml
+        nvim-treesitter-parsers.toml
+        nvim-treesitter-parsers.nix
+        nvim-treesitter-parsers.markdown
+        nvim-treesitter-parsers.lua
+
+
+        # Languages
+	{
+	  plugin = nvim-cmp;
+	  config = toLuaFile ../common/nvim/cmp.lua;
+	}
+        nvim-lspconfig
+        
+        cmp-nvim-lsp
+	cmp-git
+	cmp-treesitter
+        luasnip
+        lsp-zero-nvim
+        rust-tools-nvim
+	crates-nvim
+	null-ls-nvim
       ];
 
+      extraLuaConfig = ''
+	${builtins.readFile ../common/nvim/options.lua}
+  local lsp = require('lsp-zero').preset({})
+  local rust_tools = require('rust-tools')
+  local treesitter = require('nvim-treesitter.configs')
+  local crates = require('crates').setup()
+  local whitespace = require('whitespace-nvim')
+
+  whitespace.setup({
+		  highlight = 'NonText',
+		  ignored_filetypes = { 'TelescopePrompt', 'Trouble', 'help' },
+		  })    
+
+  -- Rust specific setup
+  rust_tools.setup {
+      server = {
+          settings = {
+              ['rust-analyzer'] = {
+                  cargo = {
+                      buildScripts = {
+                          enable = true,
+                      },
+                  },
+                  diagnostics = {
+                      enable = false,
+                  },
+                  files = {
+                      excludeDirs = { ".direnv", ".git" },
+                      watcherExclude = { ".direnv", ".git" },
+                  },
+              },
+          },
+          on_attach = on_attach,
+      },
+  }
+
+  treesitter.setup {
+      highlight = { enable = true },
+      indent = { enable = true },
+      rainbow = { enable = true },
+  }
+
+  -- Set up lspconfig.
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+  --  capabilities = capabilities
+  -- }
+      '';
       extraConfig = ''
         syntax enable                             " Syntax highlighting
-        colorscheme srcery                        " Color scheme text
 
         let g:lightline = {
           \ 'colorscheme': 'wombat',
           \ }                                     " Color scheme lightline
 
-        highlight Comment cterm=italic gui=italic " Comments become italic
-        hi Normal guibg=NONE ctermbg=NONE         " Remove background, better for personal theme
+        " highlight Comment cterm=italic gui=italic " Comments become italic
+        " hi Normal guibg=NONE ctermbg=NONE         " Remove background, better for personal theme
 
-        set number                                " Set numbers
-
-        nmap <F6> :NERDTreeToggle<CR>             " F6 opens NERDTree
+        set relativenumber number                 " Set numbers
       '';
     };
   };

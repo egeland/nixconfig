@@ -30,13 +30,14 @@ dockutil --no-restart --section apps --add "/System/Applications/Launchpad.app"
 dockutil --no-restart --section apps --add "/System/Applications/System Settings.app"
 
 # Custom Apps
-dockutil --no-restart --section apps --add "/Applications/Arc.app"
+# dockutil --no-restart --section apps --add "/Applications/Arc.app"
 dockutil --no-restart --section apps --add "/Applications/Google Chrome.app"
-dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/Visual Studio Code.app"
-dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/kitty.app"
+# dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/Visual Studio Code.app"
+# dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/kitty.app"
+dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/Alacritty.app"
 
 dockutil --add '' --type spacer --section apps --after "System Settings"
-dockutil --add '' --type spacer --section apps --after "kitty"
+dockutil --add '' --type spacer --section apps --after "Alacritty"
 
 # Default Others
 dockutil --no-restart --section others --add "${HOME}/Downloads" --view fan --display stack --sort dateadded
