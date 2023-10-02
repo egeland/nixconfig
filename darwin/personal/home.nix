@@ -243,7 +243,7 @@
 	        plugin = tokyonight-nvim;
 	        config = "colorscheme tokyonight";
 	    }
-        lightline-vim # Info bar at bottom
+        lightline-vim # Info bar at bottom   
         indent-blankline-nvim # Indentation lines
 
 		# AI
@@ -288,36 +288,6 @@
   local lsp = require('lsp-zero').preset({})
   local rust_tools = require('rust-tools')
   local crates = require('crates').setup()
-  local whitespace = require('whitespace-nvim')
-
-  whitespace.setup({
-		  highlight = 'NonText',
-		  ignored_filetypes = { 'TelescopePrompt', 'Trouble', 'help' },
-		  })    
-
-  -- Rust specific setup
-  rust_tools.setup {
-      server = {
-          settings = {
-              ['rust-analyzer'] = {
-                  cargo = {
-                      buildScripts = {
-                          enable = true,
-                      },
-                  },
-                  diagnostics = {
-                      enable = false,
-                  },
-                  files = {
-                      excludeDirs = { ".direnv", ".git" },
-                      watcherExclude = { ".direnv", ".git" },
-                  },
-              },
-          },
-          on_attach = on_attach,
-      },
-  }
-
 
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -325,18 +295,6 @@
   -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
   --  capabilities = capabilities
   -- }
-      '';
-      extraConfig = ''
-        syntax enable                             " Syntax highlighting
-
-        let g:lightline = {
-          \ 'colorscheme': 'wombat',
-          \ }                                     " Color scheme lightline
-
-        " highlight Comment cterm=italic gui=italic " Comments become italic
-        " hi Normal guibg=NONE ctermbg=NONE         " Remove background, better for personal theme
-
-        set relativenumber number                 " Set numbers
       '';
     };
   };
