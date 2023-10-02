@@ -225,64 +225,68 @@
         vim-lastplace # Opens document where you left it
         auto-pairs # Print double quotes/brackets/etc.
         vim-gitgutter # See uncommitted changes of file :GitGutterEnable
-	whitespace-nvim # Highlight trailing whitespace   
+		{
+			plugin = whitespace-nvim;
+			config = toLua "require(\"whitespace-nvim\").setup()";
+		}
+
 
         # File Tree
-        # {
-	#   plugin = nerdtree; # File Manager - set in extraConfig to F6
-        #   config = "nmap <F6> :NERDTreeToggle<CR>";
-	# }
-	{
-	  plugin = nvim-tree-lua;
-	  config = toLua "require(\"nvim-tree\").setup()";
-	}
+	    {
+		    plugin = nvim-tree-lua;
+		    config = toLua "require(\"nvim-tree\").setup()";
+	    }
 
         # Customization
         wombat256-vim # Color scheme for lightline
         {
-	  plugin = tokyonight-nvim;
-	  config = "colorscheme tokyonight";
-	}
+	        plugin = tokyonight-nvim;
+	        config = "colorscheme tokyonight";
+	    }
         lightline-vim # Info bar at bottom
         indent-blankline-nvim # Indentation lines
 
-	# AI
-	copilot-vim
+		# AI
+		copilot-vim
 
         # Treesitter
-        nvim-treesitter
-        nvim-treesitter-parsers.rust
+        {
+		   plugin = nvim-treesitter;
+		   config = toLuaFile ../common/nvim/treesitter.lua;
+		}
+		nvim-treesitter-parsers.bash
+		nvim-treesitter-parsers.json
+        nvim-treesitter-parsers.lua
+        nvim-treesitter-parsers.markdown
+        nvim-treesitter-parsers.nix
         nvim-treesitter-parsers.python
         nvim-treesitter-parsers.requirements
-        nvim-treesitter-parsers.yaml
+        nvim-treesitter-parsers.rust
         nvim-treesitter-parsers.toml
-        nvim-treesitter-parsers.nix
-        nvim-treesitter-parsers.markdown
-        nvim-treesitter-parsers.lua
+        nvim-treesitter-parsers.yaml
 
 
         # Languages
-	{
-	  plugin = nvim-cmp;
-	  config = toLuaFile ../common/nvim/cmp.lua;
-	}
-        nvim-lspconfig
-        
+        {
+          plugin = nvim-cmp;
+          config = toLuaFile ../common/nvim/cmp.lua;
+        }
         cmp-nvim-lsp
-	cmp-git
-	cmp-treesitter
+	    cmp-git
+	    cmp-treesitter
+        
+        nvim-lspconfig
         luasnip
         lsp-zero-nvim
         rust-tools-nvim
-	crates-nvim
-	null-ls-nvim
+	    crates-nvim
+	    null-ls-nvim
       ];
 
       extraLuaConfig = ''
 	${builtins.readFile ../common/nvim/options.lua}
   local lsp = require('lsp-zero').preset({})
   local rust_tools = require('rust-tools')
-  local treesitter = require('nvim-treesitter.configs')
   local crates = require('crates').setup()
   local whitespace = require('whitespace-nvim')
 
@@ -314,11 +318,6 @@
       },
   }
 
-  treesitter.setup {
-      highlight = { enable = true },
-      indent = { enable = true },
-      rainbow = { enable = true },
-  }
 
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
