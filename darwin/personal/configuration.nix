@@ -160,7 +160,7 @@
     };
     activationScripts.postActivation.text = ''
       # sudo chsh -s ${pkgs.zsh}/bin/zsh ; # Since it's not possible to declare default shell, run this command after build
-      ./darwin/personal/dock.sh; # set up the dock
+      # ./darwin/personal/dock.sh; # set up the dock
       # /etc/profiles/per-user/frode/bin/gpgconf --kill gpg-agent; echo "=== START A NEW SHELL NOW ==="
       # ${pkgs.gnupg}/bin/gpg --search-key $(gpg --card-status | awk '/General key/ { sub(/.*\//, "", $5); print $5}')
     '';

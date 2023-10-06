@@ -213,90 +213,90 @@
       toLua = str: "lua << EOF\n${str}\nEOF\n";
       toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
     in
-    {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
-
-      plugins = with pkgs.vimPlugins; [
-        # Quality of life
-        vim-lastplace # Opens document where you left it
-        auto-pairs # Print double quotes/brackets/etc.
-        vim-gitgutter # See uncommitted changes of file :GitGutterEnable
 		{
-			plugin = whitespace-nvim;
-			config = toLua "require(\"whitespace-nvim\").setup()";
-		}
+			enable = true;
+			defaultEditor = true;
+			viAlias = true;
+			vimAlias = true;
+			vimdiffAlias = true;
 
+			plugins = with pkgs.vimPlugins; [
+				# Quality of life
+				vim-lastplace # Opens document where you left it
+				auto-pairs # Print double quotes/brackets/etc.
+				vim-gitgutter # See uncommitted changes of file :GitGutterEnable
+				{
+					plugin = whitespace-nvim;
+					config = toLua "require(\"whitespace-nvim\").setup()";
+				}
+				{
+					plugin = comment-nvim;
+					config = toLua "require(\"Comment\").setup()";
+				}
+				vim-fugitive
 
-        # File Tree
-	    {
-		    plugin = nvim-tree-lua;
-		    config = toLua "require(\"nvim-tree\").setup()";
-	    }
+				# File Tree
+				{
+					plugin = nvim-tree-lua;
+					config = toLua "require(\"nvim-tree\").setup()";
+				}
 
-        # Customization
-        wombat256-vim # Color scheme for lightline
-        {
-	        plugin = tokyonight-nvim;
-	        config = "colorscheme tokyonight";
-	    }
-        lightline-vim # Info bar at bottom   
-        indent-blankline-nvim # Indentation lines
+				# Customization
+				{
+					plugin = tokyonight-nvim;
+					config = "colorscheme tokyonight";
+				}
+				nvim-lightline-lsp # LSP integration for lightline
+				{
+					plugin = lightline-vim; # Info bar at bottom
+					config = ''${builtins.readFile ../common/nvim/lightline.lua}'';
+				}
+				indent-blankline-nvim # Indentation lines
 
-		# AI
-		copilot-vim
+				# AI
+				copilot-vim
 
-        # Treesitter
-        {
-		   plugin = nvim-treesitter;
-		   config = toLuaFile ../common/nvim/treesitter.lua;
-		}
-		nvim-treesitter-parsers.bash
-		nvim-treesitter-parsers.json
-        nvim-treesitter-parsers.lua
-        nvim-treesitter-parsers.markdown
-        nvim-treesitter-parsers.nix
-        nvim-treesitter-parsers.python
-        nvim-treesitter-parsers.requirements
-        nvim-treesitter-parsers.rust
-        nvim-treesitter-parsers.toml
-        nvim-treesitter-parsers.yaml
+				# Treesitter
+				{
+					plugin = nvim-treesitter;
+					config = toLuaFile ../common/nvim/treesitter.lua;
+				}
+				nvim-treesitter-parsers.bash
+				nvim-treesitter-parsers.json
+				nvim-treesitter-parsers.lua
+				nvim-treesitter-parsers.markdown
+				nvim-treesitter-parsers.nix
+				nvim-treesitter-parsers.python
+				nvim-treesitter-parsers.requirements
+				nvim-treesitter-parsers.rust
+				nvim-treesitter-parsers.toml
+				nvim-treesitter-parsers.yaml
 
+				# Languages
+				{
+					plugin = nvim-cmp;
+					config = toLuaFile ../common/nvim/cmp.lua;
+				}
+				cmp-nvim-lsp
+				cmp-git
+				cmp-treesitter
 
-        # Languages
-        {
-          plugin = nvim-cmp;
-          config = toLuaFile ../common/nvim/cmp.lua;
-        }
-        cmp-nvim-lsp
-	    cmp-git
-	    cmp-treesitter
-        
-        nvim-lspconfig
-        luasnip
-        lsp-zero-nvim
-        rust-tools-nvim
-	    crates-nvim
-	    null-ls-nvim
-      ];
+				nvim-lspconfig
+				luasnip
+				lsp-zero-nvim
+				rust-tools-nvim
+				{
+					plugin = crates-nvim;
+					config = toLua "require(\"crates\").setup()";
+				}
+				null-ls-nvim
+			];
 
-      extraLuaConfig = ''
-	${builtins.readFile ../common/nvim/options.lua}
-  local lsp = require('lsp-zero').preset({})
-  local rust_tools = require('rust-tools')
-  local crates = require('crates').setup()
-
-  -- Set up lspconfig.
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
-  --  capabilities = capabilities
-  -- }
-      '';
-    };
+			extraLuaConfig = ''
+				${builtins.readFile ../common/nvim/options.lua}
+				${builtins.readFile ../common/nvim/lsp.lua}
+			'';
+		};
   };
   services = {
   };
