@@ -249,7 +249,7 @@
 				nvim-lightline-lsp # LSP integration for lightline
 				{
 					plugin = lightline-vim; # Info bar at bottom
-					config = ''${builtins.readFile ../common/nvim/lightline.lua}'';
+					config = ''${builtins.readFile ../common/nvim/lightline.vim}'';
 				}
 				indent-blankline-nvim # Indentation lines
 
@@ -273,6 +273,11 @@
 				nvim-treesitter-parsers.yaml
 
 				# Languages
+				plenary-nvim
+				{
+					plugin = telescope-nvim;
+					config = toLuaFile ../common/nvim/telescope.lua;
+				}
 				{
 					plugin = nvim-cmp;
 					config = toLuaFile ../common/nvim/cmp.lua;
@@ -289,7 +294,6 @@
 					plugin = crates-nvim;
 					config = toLua "require(\"crates\").setup()";
 				}
-				null-ls-nvim
 			];
 
 			extraLuaConfig = ''
