@@ -220,6 +220,9 @@
 			vimAlias = true;
 			vimdiffAlias = true;
 
+			extraLuaConfig = ''
+				${builtins.readFile ../common/nvim/options.lua}
+			'';
 			plugins = with pkgs.vimPlugins; [
 				# Quality of life
 				vim-lastplace # Opens document where you left it
@@ -274,6 +277,7 @@
 
 				# Languages
 				plenary-nvim
+				telescope-fzf-native-nvim
 				{
 					plugin = telescope-nvim;
 					config = toLuaFile ../common/nvim/telescope.lua;
@@ -285,21 +289,21 @@
 				cmp-nvim-lsp
 				cmp-git
 				cmp-treesitter
+				trouble-nvim
 
 				nvim-lspconfig
 				luasnip
 				lsp-zero-nvim
-				rust-tools-nvim
+				{
+					plugin = rust-tools-nvim;
+					config = toLuaFile ../common/nvim/lsp.lua;
+				}
 				{
 					plugin = crates-nvim;
 					config = toLua "require(\"crates\").setup()";
 				}
 			];
 
-			extraLuaConfig = ''
-				${builtins.readFile ../common/nvim/options.lua}
-				${builtins.readFile ../common/nvim/lsp.lua}
-			'';
 		};
   };
   services = {
