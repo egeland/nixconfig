@@ -14,28 +14,27 @@
   #   [
   #     ../modules/programs/alacritty.nix
   #   ];
-
   home = {
     # Specific packages for macbook
     packages = with pkgs; [
       alacritty
       bat
+      # darwin.xcode
       delta
       fish
       fzf
       gnupg
       hugo
-      kitty
       lazygit
       lsd
+      neovim
       pfetch
       pinentry_mac
-      #python310
-      #python310Packages.ipython
-      #python310Packages.pip
       pwgen
       rectangle
       starship
+      tree
+      wget
       yubikey-personalization
       zoxide
     ];
@@ -136,7 +135,7 @@
         auto-key-retrieve = true;
         default-key = "0x6249C5087F5382D2";
         trusted-key = "0x6249C5087F5382D2";
-        keyserver = "hkps://keyserver.ubuntu.com";
+        keyserver = "hkps://pgp.mit.edu";
       };
       scdaemonSettings = {
         disable-ccid = true;
@@ -208,102 +207,12 @@
         };
       };
     };
-    neovim = 
-    let
-      toLua = str: "lua << EOF\n${str}\nEOF\n";
-      toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
-    in
-		{
-			enable = true;
-			defaultEditor = true;
+    neovim = {
+			enable = false;
+			defaultEditor = false;
 			viAlias = true;
 			vimAlias = true;
 			vimdiffAlias = true;
-
-			extraLuaConfig = ''
-				${builtins.readFile ../common/nvim/options.lua}
-			'';
-			plugins = with pkgs.vimPlugins; [
-				# Quality of life
-				vim-lastplace # Opens document where you left it
-				auto-pairs # Print double quotes/brackets/etc.
-				vim-gitgutter # See uncommitted changes of file :GitGutterEnable
-				{
-					plugin = whitespace-nvim;
-					config = toLua "require(\"whitespace-nvim\").setup()";
-				}
-				{
-					plugin = comment-nvim;
-					config = toLua "require(\"Comment\").setup()";
-				}
-				vim-fugitive
-
-				# File Tree
-				{
-					plugin = nvim-tree-lua;
-					config = toLua "require(\"nvim-tree\").setup()";
-				}
-
-				# Customization
-				{
-					plugin = tokyonight-nvim;
-					config = "colorscheme tokyonight";
-				}
-				nvim-lightline-lsp # LSP integration for lightline
-				{
-					plugin = lightline-vim; # Info bar at bottom
-					config = ''${builtins.readFile ../common/nvim/lightline.vim}'';
-				}
-				indent-blankline-nvim # Indentation lines
-
-				# AI
-				copilot-vim
-
-				# Treesitter
-				{
-					plugin = nvim-treesitter;
-					config = toLuaFile ../common/nvim/treesitter.lua;
-				}
-				nvim-treesitter-parsers.bash
-				nvim-treesitter-parsers.json
-				nvim-treesitter-parsers.lua
-				nvim-treesitter-parsers.markdown
-				nvim-treesitter-parsers.nix
-				nvim-treesitter-parsers.python
-				nvim-treesitter-parsers.requirements
-				nvim-treesitter-parsers.rust
-				nvim-treesitter-parsers.toml
-				nvim-treesitter-parsers.yaml
-
-				# Languages
-				plenary-nvim
-				telescope-fzf-native-nvim
-				{
-					plugin = telescope-nvim;
-					config = toLuaFile ../common/nvim/telescope.lua;
-				}
-				{
-					plugin = nvim-cmp;
-					config = toLuaFile ../common/nvim/cmp.lua;
-				}
-				cmp-nvim-lsp
-				cmp-git
-				cmp-treesitter
-				trouble-nvim
-
-				nvim-lspconfig
-				luasnip
-				lsp-zero-nvim
-				{
-					plugin = rust-tools-nvim;
-					config = toLuaFile ../common/nvim/lsp.lua;
-				}
-				{
-					plugin = crates-nvim;
-					config = toLua "require(\"crates\").setup()";
-				}
-			];
-
 		};
   };
   services = {
