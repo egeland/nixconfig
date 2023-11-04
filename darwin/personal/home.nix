@@ -27,11 +27,17 @@
       hugo
       lazygit
       lsd
+      marksman
       neovim
+      nodejs_20
       pfetch
       pinentry_mac
       pwgen
+      python311
+      python311Packages.pip
+      python311Packages.pynvim
       rectangle
+      shellcheck
       starship
       tree
       wget
@@ -56,45 +62,46 @@
 
   programs = {
     alacritty = {
-	  enable = true;
-	  package = pkgs.alacritty;
-	  settings = {
-	  	font = {
-		  size = 18.0;
-	  	  normal = {
-	  	    family = "FiraCode Nerd Font";
-	  	    style = "Regular";
-	  	  };
-	  	  bold = {
-	  	    family = "FiraCode Nerd Font";
-	  	    style = "Bold";
-	  	  };
-	  	};
-		window = {
-		  dimensions = {
-		    columns = 100;
-		    lines = 30;
-		  };
-		  position = {
-		    x = 0;
-		    y = 0;
-		  };
-		  padding = {
-		    x = 10;
-		    y = 10;
-		  };
-		  # dynamicPadding = true;
-		  decorations = "Full";
-		  opacity = 0.95;
-		};
-		scrolling = {
-		  historySize = 10000;
-		};
-		mouse = {
-		  hideWhenTyping = true;
-		};
-	  };
-	};
+      enable = true;
+      package = pkgs.alacritty;
+      settings = {
+        font = {
+          size = 18.0;
+          normal = {
+            family = "FiraCode Nerd Font";
+            style = "Regular";
+          };
+          bold = {
+            family = "FiraCode Nerd Font";
+            style = "Bold";
+          };
+        };
+        window = {
+          option_as_alt = "Both";
+          dimensions = {
+            columns = 100;
+            lines = 30;
+          };
+          position = {
+            x = 0;
+            y = 0;
+          };
+          padding = {
+            x = 10;
+            y = 10;
+          };
+# dynamicPadding = true;
+          decorations = "Full";
+          opacity = 0.95;
+        };
+        scrolling = {
+          historySize = 10000;
+        };
+        mouse = {
+          hideWhenTyping = true;
+        };
+      };
+    };
     direnv = {
       enable = true;
       enableZshIntegration = true;

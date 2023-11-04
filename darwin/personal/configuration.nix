@@ -59,6 +59,7 @@
       "/etc/profiles/per-user/frode/bin/libexec"
       "~/bin"
       "/opt/homebrew/bin"
+      "~/.local/bin"
     ];
   };
 
@@ -93,6 +94,7 @@
       "dvorak7min"
     ];
     casks = [
+      "brave-browser"
       "google-chrome"
       "macfuse"
     ];
