@@ -31,7 +31,8 @@ dockutil --no-restart --section apps --add "/System/Applications/System Settings
 
 # Custom Apps
 # dockutil --no-restart --section apps --add "/Applications/Arc.app"
-dockutil --no-restart --section apps --add "/Applications/Google Chrome.app"
+dockutil --no-restart --section apps --add "/Applications/Brave Browser.app"
+# dockutil --no-restart --section apps --add "/Applications/Google Chrome.app"
 # dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/Visual Studio Code.app"
 # dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/kitty.app"
 dockutil --no-restart --section apps --add "/Users/frode/Applications/Home Manager Apps/Alacritty.app"
