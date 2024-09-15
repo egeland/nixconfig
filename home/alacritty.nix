@@ -13,7 +13,7 @@ in
 
     settings = {
       import = [
-        "${themes}/themes/catppuccin_latte.toml"
+        "${themes}/themes/catppuccin_frappe.toml"
       ];
 
       shell = {
@@ -26,7 +26,7 @@ in
       };
 
       font = {
-        size = 12;
+        size = 18;
         normal = {
           family = "JetBrainsMono Nerd Font Mono";
           style = "Regular";

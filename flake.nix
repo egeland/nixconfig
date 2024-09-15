@@ -39,8 +39,8 @@
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (
       let
-        username = "cedricmeukens";
-        useremail = "cedric.meukens@icloud.com";
+        username = "frode";
+        useremail = "egeland@gmail.com";
       in
       {
         systems = [
@@ -49,12 +49,7 @@
 
         flake = {
           darwinConfigurations = (
-            import ./hosts/macbook-2015
-              {
-                inherit inputs nixpkgs home-manager darwin username useremail;
-              }
-            //
-            import ./hosts/macbook-2017
+            import ./hosts/callisto
               {
                 inherit inputs nixpkgs home-manager darwin username useremail;
               }

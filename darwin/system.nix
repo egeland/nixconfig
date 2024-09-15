@@ -10,10 +10,19 @@
     defaults = {
       menuExtraClock.Show24Hour = true; # show 24 hour clock
 
+      alf = {
+        globalstate = 1;
+        stealthenabled = 1;
+        allowdownloadsignedenabled = 1;
+      };
+
       # customize dock
       dock = {
         autohide = true;
         show-recents = false; # disable recent apps
+        orientation = "bottom";
+        showhidden = true;
+        tilesize = 50;
       };
 
       # customize finder
@@ -29,6 +38,11 @@
       # customize trackpad
       trackpad = {
         TrackpadRightClick = true; # enable two finger right click
+        Clicking = true;
+      };
+
+      SoftwareUpdate = {
+        AutomaticallyInstallMacOSUpdates = true;
       };
 
       # customize settings that not supported by nix-darwin directly
@@ -36,7 +50,7 @@
       #   https://github.com/yannbertrand/macos-defaults
       NSGlobalDomain = {
         # `defaults read NSGlobalDomain "xxx"`
-        "com.apple.swipescrolldirection" = true; # enable natural scrolling(default to true)
+        "com.apple.swipescrolldirection" = false; # enable natural scrolling(default to true)
         "com.apple.sound.beep.feedback" = 0; # disable beep sound when pressing volume up/down key
         AppleKeyboardUIMode = null; # Mode 3 enables full keyboard control.
 
@@ -87,9 +101,6 @@
         };
         "com.apple.spaces" = {
           "spans-displays" = 0; # Display have seperate spaces
-        };
-        "com.apple.Safari" = {
-          AutoOpenSafeDownloads = false;
         };
         "com.apple.WindowManager" = {
           EnableStandardClickToShowDesktop = 0; # Click wallpaper to reveal desktop

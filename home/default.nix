@@ -6,12 +6,14 @@
     ./shell.nix
     ./core.nix
     ./git.nix
+    ./nvim.nix
     ./starship.nix
-    ./helix.nix
-    ./kitty.nix
-    ./alacritty.nix
-    ./vscode.nix
     ./cargo/cargo.nix
+    ./alacritty.nix
+    ./gnupg/gnupg.nix
+    #    ./helix.nix
+    #    ./kitty.nix
+    #    ./vscode.nix
   ];
 
   # Home Manager needs a bit of information about you and the

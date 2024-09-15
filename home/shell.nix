@@ -21,7 +21,7 @@
       # enableZshIntegration = true;
       settings = {
         theme = "catppuccin-latte";
-        copy_on_select = false;
+        copy_on_select = true;
         ui.pane_frames.rounded_corners = true;
       };
     };
@@ -59,6 +59,13 @@
           };
         }
       ];
+      initExtra = ''
+        export GPG_TTY="$(tty)"
+        export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+        gpgconf --launch gpg-agent
+        gpg-connect-agent updatestartuptty /bye > /dev/null
+        export EDITOR="nvim"
+      '';
     };
 
 

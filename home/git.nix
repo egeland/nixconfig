@@ -15,7 +15,7 @@
     lfs.enable = true;
 
     # TODO replace with your own name & email
-    userName = "CedricMeu";
+    userName = "Frode Egeland";
     userEmail = useremail;
 
     includes = [
@@ -68,6 +68,10 @@
       "node_modules"
       ".sass-cache"
     ];
+    signing = {
+      key = "0x6249C5087F5382D2";
+      signByDefault = true;
+    };
 
     extraConfig = {
       init.defaultBranch = "main";
@@ -87,15 +91,19 @@
 
     aliases = {
       # common aliases
-      br = "branch";
-      co = "checkout";
-      st = "status";
-      ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate";
-      ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat";
-      cm = "commit -m";
-      ca = "commit -am";
-      dc = "diff --cached";
       amend = "commit --amend -m";
+      br = "branch";
+      ca = "commit -am";
+      cb = "checkout -b";
+      ci = "commit --signoff";
+      cm = "commit -m";
+      co = "checkout";
+      dc = "diff --cached";
+      lg = "log --oneline --abbrev-commit --all --graph --decorate --color --show-signature --no-merges";
+      ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat";
+      ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate";
+      prp = "pull --rebase --prune";
+      st = "status";
 
       # aliases for submodule
       update = "submodule update --init --recursive";

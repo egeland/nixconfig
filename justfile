@@ -29,3 +29,7 @@ fmt:
 
 clean:
   rm -rf result
+
+dock:
+  ~/nixconfig/darwin/dock.sh
+
