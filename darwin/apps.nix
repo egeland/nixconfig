@@ -50,6 +50,8 @@
 
       "brave-browser"
       "google-chrome"
+
+      "transmission"
     ];
   };
 }
