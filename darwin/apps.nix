@@ -47,6 +47,7 @@
       "docker"
 
       "vlc"
+      "shotcut"
 
       "brave-browser"
       "google-chrome"
