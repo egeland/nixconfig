@@ -27,6 +27,10 @@
     # rust stuff
     rustup
 
+    # nodejs
+    nodejs_22
+    deno
+
     # language server stuff
     shellcheck
     marksman
