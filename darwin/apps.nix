@@ -53,6 +53,7 @@
       "google-chrome"
 
       "transmission"
+      "qbittorrent"
     ];
   };
 }
